@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown">
+    <div class="dropdown" ref="dropdownRef">
         <a href="#" class="btn btn-outline-light my-2 dropdown-toggle" @click.prevent="toggleOpen">
             {{title}}
         </a>
@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
 
 export default defineComponent({
   name: 'Dropdown',
@@ -21,12 +21,29 @@ export default defineComponent({
   },
   setup () {
     const isOpen = ref(false)
+    const dropdownRef = ref<null | HTMLElement>(null)
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
     }
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.value) {
+        console.log('here')
+        if (!dropdownRef.value.contains(e.target as HTMLElement) && isOpen.value) {
+          isOpen.value = false
+        }
+      }
+    }
+    onMounted(() => {
+      document.addEventListener('click', handler)
+    })
+    onUnmounted(() => {
+      document.removeEventListener('click', handler)
+    })
     return {
       isOpen,
-      toggleOpen
+      toggleOpen,
+      // 返回和 ref 同名的响应式对象，就可以拿到对应的 dom 节点
+      dropdownRef
     }
   }
 })
