@@ -24,9 +24,9 @@
 import { defineComponent, reactive } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
-import GlobalHeader, { UserPorps } from './components/GlobalHeader.vue'
+import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-const currentUser: UserPorps = {
+const currentUser: UserProps = {
   isLogin: true,
   name: 'Michael'
 }
